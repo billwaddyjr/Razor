@@ -21,7 +21,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 assemblyName: "assembly name",
                 attributes: Enumerable.Empty<TagHelperAttributeDescriptor>(),
                 requiredAttributes: new[] { "required attribute one", "required attribute two" },
-                usageDescriptor: new TagHelperUsageDescriptor("usage summary", "usage remarks"));
+                usageDescriptor: new TagHelperUsageDescriptor("usage summary", "usage remarks"),
+                outputElementHint: "some-tag");
 
             var expectedSerializedDescriptor =
                 $"{{\"{ nameof(TagHelperDescriptor.Prefix) }\":\"prefix:\"," +
@@ -34,7 +35,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 "[\"required attribute one\",\"required attribute two\"]," +
                 $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":{{"+
                 $"\"{ nameof(TagHelperUsageDescriptor.Summary) }\":\"usage summary\"," +
-                $"\"{ nameof(TagHelperUsageDescriptor.Remarks) }\":\"usage remarks\"}}}}";
+                $"\"{ nameof(TagHelperUsageDescriptor.Remarks) }\":\"usage remarks\"}}," +
+                $"\"{ nameof(TagHelperDescriptor.OutputElementHint) }\":\"some-tag\"}}";
 
             // Act
             var serializedDescriptor = JsonConvert.SerializeObject(descriptor);
@@ -68,7 +70,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                         usageDescriptor: null),
                 },
                 requiredAttributes: Enumerable.Empty<string>(),
-                usageDescriptor: null);
+                usageDescriptor: null,
+                outputElementHint: null);
             var expectedSerializedDescriptor =
                 $"{{\"{ nameof(TagHelperDescriptor.Prefix) }\":\"prefix:\"," +
                 $"\"{ nameof(TagHelperDescriptor.TagName) }\":\"tag name\"," +
@@ -89,7 +92,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 $"\"{ nameof(TagHelperAttributeDescriptor.TypeName) }\":\"{ typeof(string).FullName }\"," +
                 $"\"{ nameof(TagHelperAttributeDescriptor.UsageDescriptor) }\":null}}]," +
                 $"\"{ nameof(TagHelperDescriptor.RequiredAttributes) }\":[]," +
-                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null}}";
+                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null," +
+                $"\"{ nameof(TagHelperDescriptor.OutputElementHint) }\":null}}";
 
             // Act
             var serializedDescriptor = JsonConvert.SerializeObject(descriptor);
@@ -123,7 +127,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                         usageDescriptor: null),
                 },
                 requiredAttributes: Enumerable.Empty<string>(),
-                usageDescriptor: null);
+                usageDescriptor: null,
+                outputElementHint: null);
             var expectedSerializedDescriptor =
                 $"{{\"{ nameof(TagHelperDescriptor.Prefix) }\":\"prefix:\"," +
                 $"\"{ nameof(TagHelperDescriptor.TagName) }\":\"tag name\"," +
@@ -144,7 +149,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 $"\"{ nameof(TagHelperAttributeDescriptor.TypeName) }\":\"{ typeof(string).FullName }\"," +
                 $"\"{ nameof(TagHelperAttributeDescriptor.UsageDescriptor) }\":null}}]," +
                 $"\"{ nameof(TagHelperDescriptor.RequiredAttributes) }\":[]," +
-                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null}}";
+                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null," +
+                $"\"{ nameof(TagHelperDescriptor.OutputElementHint) }\":null}}";
 
             // Act
             var serializedDescriptor = JsonConvert.SerializeObject(descriptor);
@@ -168,7 +174,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 "[\"required attribute one\",\"required attribute two\"]," +
                 $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":{{" +
                 $"\"{ nameof(TagHelperUsageDescriptor.Summary) }\":\"usage summary\"," +
-                $"\"{ nameof(TagHelperUsageDescriptor.Remarks) }\":\"usage remarks\"}}}}";
+                $"\"{ nameof(TagHelperUsageDescriptor.Remarks) }\":\"usage remarks\"}}," +
+                $"\"{ nameof(TagHelperDescriptor.OutputElementHint) }\":\"some-tag\"}}";
             var expectedDescriptor = new TagHelperDescriptor(
                 prefix: "prefix:",
                 tagName: "tag name",
@@ -176,7 +183,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 assemblyName: "assembly name",
                 attributes: Enumerable.Empty<TagHelperAttributeDescriptor>(),
                 requiredAttributes: new[] { "required attribute one", "required attribute two" },
-                usageDescriptor: new TagHelperUsageDescriptor("usage summary", "usage remarks"));
+                usageDescriptor: new TagHelperUsageDescriptor("usage summary", "usage remarks"),
+                outputElementHint: "some-tag");
 
             // Act
             var descriptor = JsonConvert.DeserializeObject<TagHelperDescriptor>(serializedDescriptor);
@@ -220,7 +228,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 $"\"{ nameof(TagHelperAttributeDescriptor.TypeName) }\":\"{ typeof(string).FullName }\"," +
                 $"\"{ nameof(TagHelperAttributeDescriptor.UsageDescriptor) }\":null}}]," +
                 $"\"{ nameof(TagHelperDescriptor.RequiredAttributes) }\":[]," +
-                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null}}";
+                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null," +
+                $"\"{ nameof(TagHelperDescriptor.OutputElementHint) }\":null}}";
             var expectedDescriptor = new TagHelperDescriptor(
                 prefix: "prefix:",
                 tagName: "tag name",
@@ -242,7 +251,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                         usageDescriptor: null),
                 },
                 requiredAttributes: Enumerable.Empty<string>(),
-                usageDescriptor: null);
+                usageDescriptor: null,
+                outputElementHint: null);
 
             // Act
             var descriptor = JsonConvert.DeserializeObject<TagHelperDescriptor>(serializedDescriptor);
@@ -307,7 +317,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 $"\"{ nameof(TagHelperAttributeDescriptor.TypeName) }\":\"{ typeof(string).FullName }\"," +
                 $"\"{ nameof(TagHelperAttributeDescriptor.UsageDescriptor) }\":null}}]," +
                 $"\"{ nameof(TagHelperDescriptor.RequiredAttributes) }\":[]," +
-                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null}}";
+                $"\"{ nameof(TagHelperDescriptor.UsageDescriptor) }\":null," +
+                $"\"{ nameof(TagHelperDescriptor.OutputElementHint) }\":null}}";
             var expectedDescriptor = new TagHelperDescriptor(
                 prefix: "prefix:",
                 tagName: "tag name",
@@ -329,7 +340,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                         usageDescriptor: null),
                 },
                 requiredAttributes: Enumerable.Empty<string>(),
-                usageDescriptor: null);
+                usageDescriptor: null,
+                outputElementHint: null);
 
             // Act
             var descriptor = JsonConvert.DeserializeObject<TagHelperDescriptor>(serializedDescriptor);

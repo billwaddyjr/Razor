@@ -911,7 +911,8 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                         assemblyName: "SomeAssembly",
                         attributes: Enumerable.Empty<TagHelperAttributeDescriptor>(),
                         requiredAttributes: Enumerable.Empty<string>(),
-                        usageDescriptor: null),
+                        usageDescriptor: null,
+                        outputElementHint: null),
                     new TagHelperDescriptor(
                         prefix: "th:",
                         tagName: "myth2",
@@ -927,7 +928,8 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                                 usageDescriptor: null),
                         },
                         requiredAttributes: Enumerable.Empty<string>(),
-                        usageDescriptor: null)
+                        usageDescriptor: null,
+                        outputElementHint: null)
                 };
                 var availableDescriptorsText = new TagHelperDescriptor[]
                 {
@@ -938,7 +940,8 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                         assemblyName: "SomeAssembly",
                         attributes: Enumerable.Empty<TagHelperAttributeDescriptor>(),
                         requiredAttributes: Enumerable.Empty<string>(),
-                        usageDescriptor: null),
+                        usageDescriptor: null,
+                        outputElementHint: null),
                     new TagHelperDescriptor(
                         prefix: "PREFIX",
                         tagName: "myth2",
@@ -954,7 +957,8 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                                 usageDescriptor: null),
                         },
                         requiredAttributes: Enumerable.Empty<string>(),
-                        usageDescriptor: null)
+                        usageDescriptor: null,
+                        outputElementHint: null)
                 };
                 var availableDescriptorsCatchAll = new TagHelperDescriptor[]
                 {
@@ -965,7 +969,8 @@ namespace Microsoft.AspNet.Razor.Test.TagHelpers
                         assemblyName: "SomeAssembly",
                         attributes: Enumerable.Empty<TagHelperAttributeDescriptor>(),
                         requiredAttributes: Enumerable.Empty<string>(),
-                        usageDescriptor: null),
+                        usageDescriptor: null,
+                        outputElementHint: null),
                 };
 
                 // documentContent, expectedOutput, availableDescriptors

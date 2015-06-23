@@ -83,13 +83,18 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             bool designTime)
         {
             TagHelperUsageDescriptor typeUsageDescriptor = null;
+            string outputElementHint = null;
 
-#if !DNXCORE50
             if (designTime)
             {
+                var outputElementHintAttribute =
+                    typeInfo.GetCustomAttribute<OutputElementHintAttribute>(inherit: false);
+
+                outputElementHint = outputElementHintAttribute?.OutputElement;
+#if !DNXCORE50
                 typeUsageDescriptor = TagHelperUsageDescriptorFactory.CreateDescriptor(typeInfo.GetType());
-            }
 #endif
+            }
 
             var typeName = typeInfo.FullName;
 
@@ -111,7 +116,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                         assemblyName,
                         attributeDescriptors,
                         requiredAttributes: Enumerable.Empty<string>(),
-                        usageDescriptor: typeUsageDescriptor)
+                        usageDescriptor: typeUsageDescriptor,
+                        outputElementHint: outputElementHint)
                 };
             }
 
@@ -122,7 +128,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                         assemblyName,
                         attributeDescriptors,
                         attribute,
-                        typeUsageDescriptor));
+                        typeUsageDescriptor,
+                        outputElementHint));
         }
 
         private static TagHelperDescriptor BuildTagHelperDescriptor(
@@ -130,7 +137,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             string assemblyName,
             IEnumerable<TagHelperAttributeDescriptor> attributeDescriptors,
             TargetElementAttribute targetElementAttribute,
-            TagHelperUsageDescriptor usageDescriptor)
+            TagHelperUsageDescriptor usageDescriptor,
+            string outputElementHint)
         {
             var requiredAttributes = GetCommaSeparatedValues(targetElementAttribute.Attributes);
 
@@ -140,7 +148,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                 assemblyName,
                 attributeDescriptors,
                 requiredAttributes,
-                usageDescriptor);
+                usageDescriptor,
+                outputElementHint);
         }
 
         private static TagHelperDescriptor BuildTagHelperDescriptor(
@@ -149,7 +158,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             string assemblyName,
             IEnumerable<TagHelperAttributeDescriptor> attributeDescriptors,
             IEnumerable<string> requiredAttributes,
-            TagHelperUsageDescriptor usageDescriptor)
+            TagHelperUsageDescriptor usageDescriptor,
+            string outputElementHint)
         {
             return new TagHelperDescriptor(
                 prefix: string.Empty,
@@ -158,7 +168,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                 assemblyName: assemblyName,
                 attributes: attributeDescriptors,
                 requiredAttributes: requiredAttributes,
-                usageDescriptor: usageDescriptor);
+                usageDescriptor: usageDescriptor,
+                outputElementHint: outputElementHint);
         }
 
         /// <summary>

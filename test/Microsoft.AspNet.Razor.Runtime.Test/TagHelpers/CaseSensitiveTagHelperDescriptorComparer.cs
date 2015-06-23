@@ -26,8 +26,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             }
 
             return base.Equals(descriptorX, descriptorY) &&
-                // Normal comparer doesn't care about the case, required attribute order, attributes or prefixes.
-                // In tests we do.
+                // Normal comparer doesn't care about the case, required attribute order, attributes, output element
+                // hints or prefixes. In tests we do.
                 string.Equals(descriptorX.TagName, descriptorY.TagName, StringComparison.Ordinal) &&
                 string.Equals(descriptorX.Prefix, descriptorY.Prefix, StringComparison.Ordinal) &&
                 Enumerable.SequenceEqual(
@@ -36,7 +36,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                     StringComparer.Ordinal) &&
                 descriptorX.Attributes.SequenceEqual(
                     descriptorY.Attributes,
-                    TagHelperAttributeDescriptorComparer.Default);
+                    TagHelperAttributeDescriptorComparer.Default) &&
+                string.Equals(descriptorX.OutputElementHint, descriptorY.OutputElementHint, StringComparison.Ordinal);
         }
 
         public override int GetHashCode(TagHelperDescriptor descriptor)
@@ -44,7 +45,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             var hashCodeCombiner = HashCodeCombiner.Start()
                 .Add(base.GetHashCode(descriptor))
                 .Add(descriptor.TagName, StringComparer.Ordinal)
-                .Add(descriptor.Prefix);
+                .Add(descriptor.Prefix, StringComparer.Ordinal)
+                .Add(descriptor.OutputElementHint, StringComparer.Ordinal);
 
             foreach (var requiredAttribute in descriptor.RequiredAttributes)
             {

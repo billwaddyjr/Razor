@@ -1065,7 +1065,8 @@ namespace Microsoft.AspNet.Razor.Test.Generator
                         new TagHelperAttributeDescriptor("age", pAgePropertyInfo)
                     },
                     requiredAttributes: Enumerable.Empty<string>(),
-                    usageDescriptor: null),
+                    usageDescriptor: null,
+                    outputElementHint: null),
                 new TagHelperDescriptor(
                     prefix,
                     tagName: "input",
@@ -1076,7 +1077,8 @@ namespace Microsoft.AspNet.Razor.Test.Generator
                         new TagHelperAttributeDescriptor("type", inputTypePropertyInfo)
                     },
                     requiredAttributes: Enumerable.Empty<string>(),
-                    usageDescriptor: null),
+                    usageDescriptor: null,
+                    outputElementHint: null),
                 new TagHelperDescriptor(
                     prefix,
                     tagName: "input",
@@ -1088,7 +1090,8 @@ namespace Microsoft.AspNet.Razor.Test.Generator
                         new TagHelperAttributeDescriptor("checked", checkedPropertyInfo)
                     },
                     requiredAttributes: Enumerable.Empty<string>(),
-                    usageDescriptor: null)
+                    usageDescriptor: null,
+                    outputElementHint: null)
             };
         }
 

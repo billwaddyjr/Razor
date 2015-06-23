@@ -60,7 +60,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
                 assemblyName: assemblyName,
                 attributes: attributes,
                 requiredAttributes: requiredAttributes,
-                usageDescriptor: null)
+                usageDescriptor: null,
+                outputElementHint: null)
         {
         }
 
@@ -84,6 +85,7 @@ namespace Microsoft.AspNet.Razor.TagHelpers
         /// </param>
         /// <param name="usageDescriptor">The <see cref="TagHelperUsageDescriptor"/> that contains information about
         /// how to use the tag helper at design time.</param>
+        /// <param name="outputElementHint">The HTML element the tag helper may output.</param>
         public TagHelperDescriptor(
             string prefix,
             [NotNull] string tagName,
@@ -91,7 +93,8 @@ namespace Microsoft.AspNet.Razor.TagHelpers
             [NotNull] string assemblyName,
             [NotNull] IEnumerable<TagHelperAttributeDescriptor> attributes,
             [NotNull] IEnumerable<string> requiredAttributes,
-            TagHelperUsageDescriptor usageDescriptor)
+            TagHelperUsageDescriptor usageDescriptor,
+            string outputElementHint)
         {
             Prefix = prefix ?? string.Empty;
             TagName = tagName;
@@ -101,6 +104,7 @@ namespace Microsoft.AspNet.Razor.TagHelpers
             Attributes = new List<TagHelperAttributeDescriptor>(attributes);
             RequiredAttributes = new List<string>(requiredAttributes);
             UsageDescriptor = usageDescriptor;
+            OutputElementHint = outputElementHint;
         }
 
         /// <summary>
@@ -148,5 +152,11 @@ namespace Microsoft.AspNet.Razor.TagHelpers
         /// design time.
         /// </summary>
         public TagHelperUsageDescriptor UsageDescriptor { get; }
+
+        /// <summary>
+        /// The HTML element the tag helper may output.
+        /// </summary>
+        /// <remarks>Overrides the HTML IntelliSense provided at design time.</remarks>
+        public string OutputElementHint { get; set; }
     }
 }

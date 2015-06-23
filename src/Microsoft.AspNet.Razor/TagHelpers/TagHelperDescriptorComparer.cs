@@ -32,8 +32,9 @@ namespace Microsoft.AspNet.Razor.TagHelpers
         /// Determines equality based on <see cref="TagHelperDescriptor.TypeName"/>,
         /// <see cref="TagHelperDescriptor.AssemblyName"/>, <see cref="TagHelperDescriptor.TagName"/>,
         /// and <see cref="TagHelperDescriptor.RequiredAttributes"/>. Ignores
-        /// <see cref="TagHelperDescriptor.UsageDescriptor"/> because it can be inferred directly from
-        /// <see cref="TagHelperDescriptor.TypeName"/> and <see cref="TagHelperDescriptor.AssemblyName"/>.
+        /// <see cref="TagHelperDescriptor.UsageDescriptor"/> and <see cref="TagHelperDescriptor.OutputElementHint"/>
+        /// because they can be inferred directly from <see cref="TagHelperDescriptor.TypeName"/> and
+        /// <see cref="TagHelperDescriptor.AssemblyName"/>.
         /// </remarks>
         public virtual bool Equals(TagHelperDescriptor descriptorX, TagHelperDescriptor descriptorY)
         {

@@ -15,6 +15,110 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
         private static readonly string AssemblyName =
             typeof(TagHelperDescriptorFactoryTest).GetTypeInfo().Assembly.GetName().Name;
 
+        public static TheoryData OutputElementHintData
+        {
+            get
+            {
+                Func<string, Type, string, TagHelperDescriptor> createDescriptor =
+                    (tagName, tagHelperType, outputElementHint) =>
+                    new TagHelperDescriptor(
+                        prefix: null,
+                        tagName: tagName,
+                        typeName: tagHelperType.FullName,
+                        assemblyName: AssemblyName,
+                        attributes: Enumerable.Empty<TagHelperAttributeDescriptor>(),
+                        requiredAttributes: Enumerable.Empty<string>(),
+                        usageDescriptor: null,
+                        outputElementHint: outputElementHint);
+
+                // tagHelperType, designTime, expectedDescriptors
+                return new TheoryData<Type, bool, TagHelperDescriptor[]>
+                {
+                    {
+                        typeof(OutputElementHintTagHelper),
+                        true,
+                        new[]
+                        {
+                            createDescriptor("output-element-hint", typeof(OutputElementHintTagHelper), "hinted-value")
+                        }
+                    },
+                    {
+                        typeof(MultiOutputElementHintTagHelper),
+                        true,
+                        new[]
+                        {
+                            createDescriptor("p", typeof(MultiOutputElementHintTagHelper), "hinted-value"),
+                            createDescriptor("div", typeof(MultiOutputElementHintTagHelper), "hinted-value")
+                        }
+                    },
+                    {
+                        typeof(InheritedOutputElementHintTagHelper),
+                        true,
+                        new[]
+                        {
+                            createDescriptor(
+                                "inherited-output-element-hint",
+                                typeof(InheritedOutputElementHintTagHelper),
+                                null)
+                        }
+                    },
+                    {
+                        typeof(OverriddenOutputElementHintTagHelper),
+                        true,
+                        new[]
+                        {
+                            createDescriptor(
+                                "overridden-output-element-hint",
+                                typeof(OverriddenOutputElementHintTagHelper),
+                                "overridden")
+                        }
+                    },
+                    {
+                        typeof(OverriddenMultiOutputElementHintTagHelper),
+                        true,
+                        new[]
+                        {
+                            createDescriptor(
+                                "span",
+                                typeof(OverriddenMultiOutputElementHintTagHelper),
+                                "overridden-multi"),
+                        }
+                    },
+                    {
+                        typeof(MultiOutputElementHintTagHelper),
+                        false,
+                        new[]
+                        {
+                            createDescriptor("p", typeof(MultiOutputElementHintTagHelper), null),
+                            createDescriptor("div", typeof(MultiOutputElementHintTagHelper), null)
+                        }
+                    },
+                };
+            }
+        }
+
+        [Theory]
+        [MemberData(nameof(OutputElementHintData))]
+        public void CreateDescriptors_CapturesOutputElementHint(
+            Type tagHelperType,
+            bool designTime,
+            TagHelperDescriptor[] expectedDescriptors)
+        {
+            // Arrange
+            var errorSink = new ErrorSink();
+
+            // Act
+            var descriptors = TagHelperDescriptorFactory.CreateDescriptors(
+                AssemblyName,
+                tagHelperType,
+                designTime,
+                errorSink);
+
+            // Assert
+            Assert.Empty(errorSink.Errors);
+            Assert.Equal(expectedDescriptors, descriptors, CaseSensitiveTagHelperDescriptorComparer.Default);
+        }
+
         public static TheoryData AttributeTargetData
         {
             get
@@ -1525,6 +1629,33 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
             }
 
             return data;
+        }
+
+        [OutputElementHint("hinted-value")]
+        private class OutputElementHintTagHelper : TagHelper
+        {
+        }
+
+        [TargetElement("p")]
+        [TargetElement("div")]
+        [OutputElementHint("hinted-value")]
+        private class MultiOutputElementHintTagHelper : TagHelper
+        {
+        }
+
+        private class InheritedOutputElementHintTagHelper : OutputElementHintTagHelper
+        {
+        }
+
+        [OutputElementHint("overridden")]
+        private class OverriddenOutputElementHintTagHelper : OutputElementHintTagHelper
+        {
+        }
+
+        [TargetElement("span")]
+        [OutputElementHint("overridden-multi")]
+        private class OverriddenMultiOutputElementHintTagHelper : MultiOutputElementHintTagHelper
+        {
         }
 
         [TargetElement(Attributes = "class*")]

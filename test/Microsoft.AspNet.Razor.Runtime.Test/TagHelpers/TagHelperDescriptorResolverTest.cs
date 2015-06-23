@@ -1369,7 +1369,8 @@ namespace Microsoft.AspNet.Razor.Runtime.TagHelpers
                 assemblyName,
                 attributes: Enumerable.Empty<TagHelperAttributeDescriptor>(),
                 requiredAttributes: Enumerable.Empty<string>(),
-                usageDescriptor: null);
+                usageDescriptor: null,
+                outputElementHint: null);
         }
 
         private static TagHelperDescriptor CreatePrefixedValidPlainDescriptor(string prefix)
